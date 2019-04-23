@@ -1,0 +1,23 @@
+﻿@model  JobOffers.ViewModels.JobCategoriesViewModel
+
+@{ 
+    ViewBag.Title = "Category Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Categories Details</h2>
+
+<table class="table table-hover table-borderless">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.Description</td>
+            </tr>
+    </tbody>
+</table>

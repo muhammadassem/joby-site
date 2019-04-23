@@ -1,0 +1,44 @@
+﻿<nav class="navbar navbar-dark navbar-expand-md sticky-top navbar-default">
+    <div class="container">
+        <a href="#" class="navbar-brand">
+            <i class="fa fa-graduation-cap"></i> Joby
+        </a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="~/" class="nav-link">
+                        <i class="fa fa-home"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="~/JobCategory" class="nav-link">
+                        <i class="fa fa-glass"></i>
+                        Categories
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/About" class="nav-link">
+                        <i class="fa fa-info-circle"></i>
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fa fa-phone"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+
+            @*@Html.Partial("_LoginNavBarPartial")*@
+            @Html.Partial("_LoginPartial") 
+            <!--login-->
+        </div>
+    </div>
+</nav>

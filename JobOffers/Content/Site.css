@@ -1,0 +1,56 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    //padding-top: 100px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.navbar-default {
+    background-color: #01376e;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #FFFFFF;
+}
+
+.main {
+    padding-top: 50px;
+}
+
+.footer {
+    background-color: #01376e;
+    overflow: hidden;
+}
+
+.footer .list-group-item {
+    background-color: #01376e;
+    color: #d1d1d1;
+}
+
+.copy-right {
+    background-color: #00264d;
+    color: #d1d1d1;
+}
+
+.footer-header {
+    color: #a3a3a3;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
