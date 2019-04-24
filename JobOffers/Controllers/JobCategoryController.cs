@@ -20,7 +20,7 @@ namespace JobOffers.Controllers
         // GET: JobCategory
         public ActionResult Index()
         {
-            IEnumerable<JobCategories> jobsView = _context.JobCategories.ToList();
+            IEnumerable<JobCategory> jobsView = _context.JobCategories.ToList();
 
             return View(jobsView);
         }
@@ -65,7 +65,7 @@ namespace JobOffers.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(JobCategories model)
+        public ActionResult Save(JobCategory model)
         {
             if(!ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace JobOffers.Controllers
             return RedirectToAction("Index", "JobCategory");
         }
 
-        [HttpPost]
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
             var categoryInDb = _context.JobCategories.SingleOrDefault(m => m.Id == id);

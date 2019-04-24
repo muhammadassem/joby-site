@@ -1,0 +1,29 @@
+﻿@model  JobOffers.ViewModels.JobViewModel
+
+@{
+    ViewBag.Title = "Job Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Job Details</h2>
+
+<table class="table table-hover table-borderless">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.JobTitle)</th>
+            <th>@Html.DisplayNameFor(m => m.JobDescription)</th>
+            <th>@Html.DisplayNameFor(m => m.JobCategory.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.ImageUrl)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.JobTitle</td>
+            <td>@Model.JobDescription</td>
+            <td>@Model.JobCategory.Name</td>
+            <td><img src="~/Uploads/@Model.ImageUrl"  class="img-thumbnail" style="width:58px; height:58px;"/></td>
+            
+        </tr>
+    </tbody>
+</table>

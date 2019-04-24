@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobCategoryController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -188,14 +189,41 @@
     <Compile Include="Migrations\201904221623333_AddJobDescriptionTable.Designer.cs">
       <DependentUpon>201904221623333_AddJobDescriptionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904231259150_AddJobsCategoryTable.cs" />
+    <Compile Include="Migrations\201904231259150_AddJobsCategoryTable.Designer.cs">
+      <DependentUpon>201904231259150_AddJobsCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904231306281_UpdateJobDescriptionColumnName.cs" />
+    <Compile Include="Migrations\201904231306281_UpdateJobDescriptionColumnName.Designer.cs">
+      <DependentUpon>201904231306281_UpdateJobDescriptionColumnName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904231632061_makeCategoryIdNullabe.cs" />
+    <Compile Include="Migrations\201904231632061_makeCategoryIdNullabe.Designer.cs">
+      <DependentUpon>201904231632061_makeCategoryIdNullabe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904231647301_setCategoryIdToNotNullabe.cs" />
+    <Compile Include="Migrations\201904231647301_setCategoryIdToNotNullabe.Designer.cs">
+      <DependentUpon>201904231647301_setCategoryIdToNotNullabe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904231650193_setCategoryIdTobyte.cs" />
+    <Compile Include="Migrations\201904231650193_setCategoryIdTobyte.Designer.cs">
+      <DependentUpon>201904231650193_setCategoryIdTobyte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904232059227_test.cs" />
+    <Compile Include="Migrations\201904232059227_test.Designer.cs">
+      <DependentUpon>201904232059227_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\JobCategories.cs" />
+    <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\JobCategory.cs" />
+    <Compile Include="Models\ValidateFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\JobCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -270,9 +298,13 @@
     <Content Include="Views\JobCategory\Index.cshtml" />
     <Content Include="Views\JobCategory\Details.cshtml" />
     <Content Include="Views\JobCategory\JobCategoriesForm.cshtml" />
+    <Content Include="Views\Job\Index.cshtml" />
+    <Content Include="Views\Job\JobForm.cshtml" />
+    <Content Include="Views\Job\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -293,12 +325,32 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904211559153_InitialCreate.resx">
       <DependentUpon>201904211559153_InitialCreate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904221552539_AddGenderToAspUsersTable.resx">
       <DependentUpon>201904221552539_AddGenderToAspUsersTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904221623333_AddJobDescriptionTable.resx">
       <DependentUpon>201904221623333_AddJobDescriptionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231259150_AddJobsCategoryTable.resx">
+      <DependentUpon>201904231259150_AddJobsCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231306281_UpdateJobDescriptionColumnName.resx">
+      <DependentUpon>201904231306281_UpdateJobDescriptionColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231632061_makeCategoryIdNullabe.resx">
+      <DependentUpon>201904231632061_makeCategoryIdNullabe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231647301_setCategoryIdToNotNullabe.resx">
+      <DependentUpon>201904231647301_setCategoryIdToNotNullabe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231650193_setCategoryIdTobyte.resx">
+      <DependentUpon>201904231650193_setCategoryIdTobyte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904232059227_test.resx">
+      <DependentUpon>201904232059227_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

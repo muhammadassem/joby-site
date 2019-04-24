@@ -6,15 +6,18 @@ using System.Web;
 
 namespace JobOffers.Models
 {
-    public class JobCategories
+    public class JobCategory
     {
         
         public int Id { get; set; }
 
         [Required]
+        [Display(Name="Job Category Name")]
         public string Name { get; set; }
 
         [Required]
         public string Description { get; set; }
+
+        public ICollection<Job> Jobs { get; set; }
     }
 }

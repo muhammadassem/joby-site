@@ -21,7 +21,8 @@ namespace JobOffers.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<JobCategories> JobCategories { get; set; }
+        public DbSet<JobCategory> JobCategories { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -31,5 +32,7 @@ namespace JobOffers.Models
         {
             return new ApplicationDbContext();
         }
+
+        
     }
 }

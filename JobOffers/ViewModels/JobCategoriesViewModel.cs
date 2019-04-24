@@ -12,11 +12,11 @@ namespace JobOffers.ViewModels
         public int? Id { get; set; }
 
         [Required]
-        [Display(Name = "Job Title")]
+        [Display(Name = "Job Category Title")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Job Description")]
+        [Display(Name = "Job Category Description")]
         public string Description { get; set; }
 
         public string PageTitle
@@ -31,7 +31,7 @@ namespace JobOffers.ViewModels
             Id = 0;
         }
 
-        public JobCategoriesViewModel(JobCategories model)
+        public JobCategoriesViewModel(JobCategory model)
         {
             Id = model.Id;
             Name = model.Name;

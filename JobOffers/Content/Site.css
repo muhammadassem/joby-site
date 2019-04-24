@@ -2,7 +2,6 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    //padding-top: 100px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,7 +19,7 @@ body {
 }
 
 .main {
-    padding-top: 50px;
+    padding: 50px 0;
 }
 
 .footer {
@@ -53,4 +52,8 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.icons {
+    font-size: 20px;
 }

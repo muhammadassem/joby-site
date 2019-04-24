@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JobOffers.Models.JobCategories>
+﻿@model IEnumerable<JobOffers.Models.JobCategory>
 
 @{ 
     ViewBag.Title = "Job Categories";
@@ -34,7 +34,7 @@
                     @Html.ActionLink(" ", "Details", "JobCategory", new { id = item.Id }, new { @class = "fa fa-info-circle" })
                 </td>
                 <td>
-                    <a href="" id="delete-cateogry" data-category-id="@item.Id" class="fa fa-trash"></a>
+                    <a href="" data-category-id="@item.Id" class="fa fa-trash delete-cateogry"></a>
                 </td>
             </tr>
         }
@@ -45,7 +45,7 @@
     <script>
     $(document).ready(function () {
 
-        $("#delete-cateogry").click(function (e) {
+        $(".delete-cateogry").click(function (e) {
             e.preventDefault();
 
             if (confirm("Are You Sure?"))
@@ -57,7 +57,7 @@
 
 
                 $.ajax({
-                    type: "POST",
+                    type: "DELETE",
                     url: '/JobCategory/Delete/' + id,
                     success: function () {
                         console.log("success");
