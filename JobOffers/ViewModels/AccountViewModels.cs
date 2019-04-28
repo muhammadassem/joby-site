@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JobOffers.Models
@@ -49,9 +50,12 @@ namespace JobOffers.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+
+        //[Required]
+        //[EmailAddress]
+        //public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -68,6 +72,11 @@ namespace JobOffers.Models
         public string Gender { get; set; }
 
         public IEnumerable<string> GenderTypes { get; set; }
+
+        [Required]
+        public string UserRole { get; set; }
+
+        public IEnumerable<IdentityRole> Roles { get; set; }
 
         [Required]
         [Display(Name="username")]

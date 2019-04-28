@@ -1,1 +1,33 @@
-﻿<h1>Home</h1>
+﻿@model IEnumerable<JobOffers.Models.JobCategory>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+
+<h2> Available Jobs </h2>
+
+
+
+    @foreach (var category in Model)
+    {
+        <section class="jumbotron jumb">
+            <h3>@category.Name</h3>
+
+            <div class="row">
+                @foreach (var job in category.Jobs)
+                {
+                    <div class="col-md-3">
+                        <div class="card mt-4">
+                            <div class="card-img-top img-thumbnail" style="height: 180px;">
+                                <img src="~/Uploads/@job.ImageUrl" class="img-fluid" />
+                            </div>
+                            <div class="card-header">@job.JobTitle</div>
+                            <div class="card-body">@job.JobDescription</div>
+                            @Html.ActionLink("Details", "Details", "Job", new { id = job.Id }, new { @class = "btn btn-info"})
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+    }

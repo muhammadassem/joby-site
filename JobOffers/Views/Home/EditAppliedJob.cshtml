@@ -1,0 +1,42 @@
+﻿@model JobOffers.ViewModels.ApplyForJobViewModel
+@{
+    ViewBag.Title = "EditAppliedJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditAppliedJob</h2>
+
+@using (Html.BeginForm("EditAppliedJob", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.JobId)
+    @Html.HiddenFor(m => m.UserId)
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.Job.JobTitle)</dt>
+                <dd>@Model.Job.JobTitle</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Job.JobDescription)</dt>
+                <dd>@Model.Job.JobDescription</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Message)</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.Message)
+                    @Html.ValidationMessageFor(m => m.Message, null, new { @class="text-danger" })
+                </dd>
+
+                <dt>@Html.DisplayNameFor(m => m.DateAdded)</dt>
+                <dd>@Model.DateAdded</dd>
+            </dl>
+
+            <button type="submit" class="btn btn-success">submit</button>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+}

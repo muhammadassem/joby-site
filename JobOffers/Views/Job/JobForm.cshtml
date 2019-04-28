@@ -4,38 +4,92 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New</h2>
+<h2>@Model.PageTitle</h2>
 
-@using (@Html.BeginForm("Save", "Job", FormMethod.Post, new { enctype = "multipart/form-data"}))
-{
-    @Html.ValidationSummary()
+<div class="row">
+    <div class="col-md-8">
+        @using (@Html.BeginForm("Save", "Job", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary()
 
-    @Html.HiddenFor(m => m.Id)
-    @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id, new { id = "jobId", data_jobId = Model.Id })
+            @Html.HiddenFor(m => m.ImageUrl)
+            @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.JobTitle)
-        @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.JobTitle)
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobTitle)
+                @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JobTitle)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobDescription)
+                @Html.TextBoxFor(m => m.JobDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JobDescription)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryId)
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.JobCategories, "Id", "Name"), "Select Category", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CategoryId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImageUrl)
+                <input type="file" name="upload" class="form-control" id="file" />
+                @*@Html.ValidationMessageFor(m => m.ImageUrl)*@
+                <div class="error" id="error"></div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary" id="submit">Submit</button>
+        }
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.JobDescription)
-        @Html.TextBoxFor(m => m.JobDescription, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.JobDescription)
-    </div>
+    @if (Model.Id != 0)
+    {
+        <div class="col-md-4">
+            <img src="~/Uploads/@Model.ImageUrl" class="img-fluid img-thumbnail" />
+        </div>
+    }
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.CategoryId)
-        @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.JobCategories, "Id", "Name"), "Select Category", new { @class = "form-control"} )
-        @Html.ValidationMessageFor(m => m.CategoryId)
-    </div>
+@section Scripts {
+    <script>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.ImageUrl)
-        <input type="file" name="upload" class="form-control" />
-        @Html.ValidationMessageFor(m => m.ImageUrl)
-    </div>
+        $(document).ready(function () {
+            $("#submit").on("click", function () {
 
-    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                if ($("#jobId").attr("data-jobId") == 0) {
+                    // Add New Job
+
+                    console.log("added");
+
+                    if ($("#file").val() == "") {
+                        $("#error").empty().append("Image is Required");
+                        return false;
+                    }
+
+                }
+
+                var inputFile = document.getElementById("file")
+                // check file size in Mb
+                var fileSize = inputFile.files[0].size / 1024 / 1024;
+
+                if (fileSize > 2) {
+                    $("#error").empty().append("file is too large");
+                    return false;
+                }
+
+                // check file extension
+                var supportedFileExtensions = ["png", "jpg", "BMP", "gif"]
+                var fileExtension = (inputFile.value).substr(inputFile.value.lastIndexOf(".") + 1);
+
+                // or can use $.inArray()
+                if (!supportedFileExtensions.find(x => x == fileExtension)) {
+                    $("#error").empty().append("file is not supported");
+                    return false;
+                }
+            });
+        });
+    </script>
 }

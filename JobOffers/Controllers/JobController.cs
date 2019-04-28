@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using JobOffers.ViewModels;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace JobOffers.Controllers
 {
@@ -19,9 +20,10 @@ namespace JobOffers.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Job
+        [Authorize]
         public ActionResult Index()
         {
-            var jobs = _context.Jobs.Include(j => j.JobCategory).ToList();
+            var jobs = _context.Jobs.Include(j => j.JobCategory).Include(j => j.User).ToList();
             return View(jobs);
         }
 
@@ -40,8 +42,8 @@ namespace JobOffers.Controllers
         public ActionResult Edit(int? id)
         {
             var job = _context.Jobs.SingleOrDefault(j => j.Id == id);
-            
-            if(job == null)
+
+            if (job == null)
             {
                 return HttpNotFound();
             }
@@ -63,7 +65,7 @@ namespace JobOffers.Controllers
             {
                 var jobCategories = _context.JobCategories.ToList();
 
-                var viewModel = new JobViewModel
+                var viewModel = new JobViewModel(model)
                 {
                     JobCategories = jobCategories
                 };
@@ -73,6 +75,12 @@ namespace JobOffers.Controllers
 
             if (upload != null)
             {
+                if (model.Id != 0)
+                {
+                    // Delete updated photo from server
+                    var oldImagePath = model.ImageUrl;
+                    System.IO.File.Delete(Path.Combine(Server.MapPath("~/Uploads"), oldImagePath));
+                }
                 string path = Path.Combine(Server.MapPath("~/Uploads"), upload.FileName);
                 upload.SaveAs(path);
                 model.ImageUrl = upload.FileName;
@@ -80,8 +88,10 @@ namespace JobOffers.Controllers
 
             if (model.Id == 0)
             {
+                model.PublisherId = User.Identity.GetUserId();
                 _context.Jobs.Add(model);
-            } else
+            }
+            else
             {
                 var jobInDb = _context.Jobs.SingleOrDefault(j => j.Id == model.Id);
 
@@ -90,10 +100,10 @@ namespace JobOffers.Controllers
                     return HttpNotFound();
                 }
 
-                
+
                 jobInDb.JobTitle = model.JobTitle;
                 jobInDb.JobDescription = model.JobDescription;
-                jobInDb.ImageUrl = model.ImageUrl;    
+                jobInDb.ImageUrl = model.ImageUrl;
                 jobInDb.CategoryId = model.CategoryId;
 
             }
@@ -108,7 +118,7 @@ namespace JobOffers.Controllers
         {
             var job = _context.Jobs.SingleOrDefault(j => j.Id == id);
 
-            if(job == null)
+            if (job == null)
             {
                 return HttpNotFound();
             }
@@ -122,15 +132,56 @@ namespace JobOffers.Controllers
         public ActionResult Details(int id)
         {
             var jobInDb = _context.Jobs.Include(j => j.JobCategory).SingleOrDefault(j => j.Id == id);
-            
-            if(jobInDb == null)
+
+            if (jobInDb == null)
             {
                 return HttpNotFound();
             }
 
             var viewModel = new JobViewModel(jobInDb);
+            Session["jobId"] = id;
 
             return View(viewModel);
+        }
+
+        [Authorize]
+        public ActionResult ApplyForJob()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApplyForJob(ApplyForJob model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ApplyForJobViewModel
+                {
+                    Message = model.Message
+                };
+
+                return View(viewModel);
+            }
+
+            model.JobId = (int)Session["jobId"];
+            model.ApplicatorId = User.Identity.GetUserId();
+
+            var checkIfSameUserApplicateForSameJob = _context.ApplyForJob.Where(j => j.ApplicatorId == model.ApplicatorId && j.JobId == model.JobId).ToList();
+
+            if (checkIfSameUserApplicateForSameJob.Count >= 1)
+            {
+                ViewBag.message = "Already applied for this job";
+                return View();
+            }
+
+            model.ApplicationDate = DateTime.Now;
+
+            _context.ApplyForJob.Add(model);
+            _context.SaveChanges();
+            ViewBag.message = "Applied Successfully";
+
+            return RedirectToAction("Index", "Job");
         }
     }
 }

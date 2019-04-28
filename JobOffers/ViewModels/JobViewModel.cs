@@ -16,6 +16,7 @@ namespace JobOffers.ViewModels
         [Display(Name = "Job Description")]
         [Required]
         public string JobDescription { get; set; }
+
         [Display(Name = "Image Url")]
         [Required]
         public string ImageUrl { get; set; }
@@ -31,6 +32,9 @@ namespace JobOffers.ViewModels
 
         public IEnumerable<JobCategory> JobCategories { get; set; }
 
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+
         public JobViewModel()
         {
             Id = 0;
@@ -43,6 +47,13 @@ namespace JobOffers.ViewModels
             ImageUrl = job.ImageUrl;
             CategoryId = job.CategoryId;
             JobCategory = job.JobCategory;
+            UserId = job.PublisherId;
+        }
+
+        public string PageTitle {
+            get {
+                return Id == 0 ? "New Job" : "Edit Job";
+            }
         }
     }
 }

@@ -1,36 +1,35 @@
-﻿@model IEnumerable<JobOffers.Models.Job>
+﻿@model IEnumerable<JobOffers.Models.ApplyForJob>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "JobsAppliedByUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-@Html.ActionLink("New Job", "New", "Job", null, new { @class= "btn btn-primary"})
-<table class="table">
+<h2>JobsAppliedByUser</h2>
+
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m => m.JobTitle)</th>
-            <th>@Html.DisplayNameFor(m => m.JobDescription)</th>
-            <th>@Html.DisplayNameFor(m => m.JobCategory.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.ImageUrl)</th>
-            <th>@Html.DisplayNameFor(m => m.User.UserName)</th>
+            <th>@Html.DisplayNameFor(m => m.Job.JobTitle)</th>
+            <th>@Html.DisplayNameFor(m => m.ApplicationDate)</th>
+            <th>@Html.DisplayNameFor(m => m.Job.JobDescription)</th>
+            <th>@Html.DisplayNameFor(m => m.Message)</th>
             <th>Controls</th>
         </tr>
     </thead>
+
     <tbody>
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@item.JobTitle</td>
-                <td>@item.JobDescription</td>
-                <td>@item.JobCategory.Name</td>
-                <td>@item.ImageUrl</td>
-                <td>@item.User.UserName</td>
+                <td>@item.Job.JobTitle</td>
+                <td>@item.ApplicationDate</td>
+                <td>@item.Job.JobDescription</td>
+                <td>@item.Message</td>
 
                 <td>
-                    <a href="~/Job/Edit/@item.Id" class="icons fa fa-edit text-primary"></a>
-                    <a href="~/Job/Details/@item.Id" class="icons fa fa-info-circle text-info"></a>
+                    <a href="~/Home/EditAppliedJob/@item.Id" class="icons fa fa-edit text-primary"></a>
+                    <a href="~/Home/DetailsOfAppliedJob/@item.Id" class="icons fa fa-info-circle text-info"></a>
                     <a href="" class="icons fa fa-trash text-danger delete-job" data-job-id="@item.Id"></a>
                 </td>
             </tr>
@@ -38,7 +37,7 @@
     </tbody>
 </table>
 
-@section Scripts
+@section Scripts 
 {
     <script>
         $(document).ready(function () {
@@ -47,11 +46,12 @@
 
                 var row = $(this).closest("tr");
                 var id = $(this).attr("data-job-id");
+
                 console.log("delete")
                 if (confirm("Are you sure to delete")) {
                     $.ajax({
-                        url: "/Job/Delete/" + id,
-                        method: "DELETE",
+                        url: "/Home/DeleteAppliedJob/" + id,
+                        method: "POST",
                         success: function () {
                             row.remove();
                             console.log("Success");

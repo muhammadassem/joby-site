@@ -22,6 +22,20 @@ body {
     padding: 50px 0;
 }
 
+.site-sreach {
+    width: 140px;
+    padding-left: 40px;
+    background-image: url('../Images/icons8-search-50.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+    transition: width .5s ease-in-out;
+}
+
+.site-sreach:focus {
+    width: 100%;
+}
+
 .footer {
     background-color: #01376e;
     overflow: hidden;

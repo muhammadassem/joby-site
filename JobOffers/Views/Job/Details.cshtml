@@ -7,23 +7,22 @@
 
 <h2>Job Details</h2>
 
-<table class="table table-hover table-borderless">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(m => m.JobTitle)</th>
-            <th>@Html.DisplayNameFor(m => m.JobDescription)</th>
-            <th>@Html.DisplayNameFor(m => m.JobCategory.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.ImageUrl)</th>
+<div class="jumbotron row">
+    <div class="col-md-6">
+        <dl>
+            <dt>@Html.DisplayNameFor(m => m.JobTitle)</dt>
+            <dd>@Model.JobTitle</dd>
+            <dt>@Html.DisplayNameFor(m => m.JobDescription)</dt>
+            <dd>@Model.JobDescription</dd>
+            <dt>@Html.DisplayNameFor(m => m.JobCategory.Name)</dt>
+            <dd>@Model.JobCategory.Name</dd>
+        </dl>
+    </div>
 
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@Model.JobTitle</td>
-            <td>@Model.JobDescription</td>
-            <td>@Model.JobCategory.Name</td>
-            <td><img src="~/Uploads/@Model.ImageUrl"  class="img-thumbnail" style="width:58px; height:58px;"/></td>
-            
-        </tr>
-    </tbody>
-</table>
+    <div class="col-md-6">
+        <dt>@Html.DisplayNameFor(m => m.ImageUrl)</dt>
+        <dd><img src="~/Uploads/@Model.ImageUrl" class="img-thumbnail" style="width:180px; height:180px;" /></dd>
+    </div>
+
+    <div class="col-md-4 offset-4">@Html.ActionLink("Apply", "ApplyForJob", "Job", new { id = Model.Id }, new { @class = "btn btn-info" })</div>
+</div>

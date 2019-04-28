@@ -1,0 +1,28 @@
+﻿@model JobOffers.ViewModels.ApplyForJobViewModel
+
+@{
+    ViewBag.Title = "ApplyForJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ApplyForJob</h2>
+
+@if(ViewBag.message != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.message
+    </div>
+}
+
+@using (Html.BeginForm("ApplyForJob", "Job", null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Message)
+        @Html.TextBoxFor(m => m.Message, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Message, null, new { @class="text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+}

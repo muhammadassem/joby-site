@@ -174,6 +174,7 @@
     <Compile Include="Controllers\JobCategoryController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,7 +214,28 @@
     <Compile Include="Migrations\201904232059227_test.Designer.cs">
       <DependentUpon>201904232059227_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904271211374_AddApplyForJobTable.cs" />
+    <Compile Include="Migrations\201904271211374_AddApplyForJobTable.Designer.cs">
+      <DependentUpon>201904271211374_AddApplyForJobTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904272044563_AddUserIdToJobsTable.cs" />
+    <Compile Include="Migrations\201904272044563_AddUserIdToJobsTable.Designer.cs">
+      <DependentUpon>201904272044563_AddUserIdToJobsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904272259050_renameDateAddedToApplicationDateInApplyForJobTable.cs" />
+    <Compile Include="Migrations\201904272259050_renameDateAddedToApplicationDateInApplyForJobTable.Designer.cs">
+      <DependentUpon>201904272259050_renameDateAddedToApplicationDateInApplyForJobTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904272337021_renameUserIdToPublisherIdInJobsTable.cs" />
+    <Compile Include="Migrations\201904272337021_renameUserIdToPublisherIdInJobsTable.Designer.cs">
+      <DependentUpon>201904272337021_renameUserIdToPublisherIdInJobsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904272342020_renameUserIdToApplicatorIdInApplyForJobTable.cs" />
+    <Compile Include="Migrations\201904272342020_renameUserIdToApplicatorIdInApplyForJobTable.Designer.cs">
+      <DependentUpon>201904272342020_renameUserIdToApplicatorIdInApplyForJobTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ApplyForJob.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Job.cs" />
@@ -222,9 +244,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\ApplyForJobViewModel.cs" />
+    <Compile Include="ViewModels\AppliedJobsPostedByPublisherViewModel.cs" />
     <Compile Include="ViewModels\JobCategoriesViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\RolesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -239,6 +264,9 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\icons8-google-web-search-64.png" />
+    <Content Include="Images\icons8-google-web-search.svg" />
+    <Content Include="Images\icons8-search-50.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -301,6 +329,15 @@
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Views\Job\JobForm.cshtml" />
     <Content Include="Views\Job\Details.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\New.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Job\ApplyForJob.cshtml" />
+    <Content Include="Views\Home\JobsAppliedByUser.cshtml" />
+    <Content Include="Views\Home\DetailsOfAppliedJob.cshtml" />
+    <Content Include="Views\Home\EditAppliedJob.cshtml" />
+    <Content Include="Views\Home\AppliedJobsPostedByPublisher.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,6 +388,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904232059227_test.resx">
       <DependentUpon>201904232059227_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271211374_AddApplyForJobTable.resx">
+      <DependentUpon>201904271211374_AddApplyForJobTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904272044563_AddUserIdToJobsTable.resx">
+      <DependentUpon>201904272044563_AddUserIdToJobsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904272259050_renameDateAddedToApplicationDateInApplyForJobTable.resx">
+      <DependentUpon>201904272259050_renameDateAddedToApplicationDateInApplyForJobTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904272337021_renameUserIdToPublisherIdInJobsTable.resx">
+      <DependentUpon>201904272337021_renameUserIdToPublisherIdInJobsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904272342020_renameUserIdToApplicatorIdInApplyForJobTable.resx">
+      <DependentUpon>201904272342020_renameUserIdToApplicatorIdInApplyForJobTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

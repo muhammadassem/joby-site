@@ -8,7 +8,7 @@
         </button>
 
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="~/" class="nav-link">
                         <i class="fa fa-home"></i>
@@ -34,11 +34,19 @@
                         Contact
                     </a>
                 </li>
-            </ul>
 
-            @*@Html.Partial("_LoginNavBarPartial")*@
-            @Html.Partial("_LoginPartial") 
-            <!--login-->
+                <li class="nav-item">
+                    @using (Html.BeginForm("Search", "Home", null, FormMethod.Post))
+                    {
+                        <input type="text" class="form-control site-sreach" name="search" placeholder="Search" />
+                    }
+                </li>
+            </ul>
+            <div class="ml-auto">
+                @*@Html.Partial("_LoginNavBarPartial")*@
+                @Html.Partial("_LoginPartial")
+                <!--login-->
+            </div>
         </div>
     </div>
 </nav>
