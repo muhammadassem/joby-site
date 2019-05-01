@@ -9,7 +9,7 @@ namespace JobOffers.ViewModels
 {
     public class JobViewModel
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Job Title")]
         [Required]
         public string JobTitle { get; set; }

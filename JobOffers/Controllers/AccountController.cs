@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JobOffers.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace JobOffers.Controllers
 {
@@ -200,6 +201,82 @@ namespace JobOffers.Controllers
             };
 
             return View(registrationViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            var currentUserId = User.Identity.GetUserId();
+
+            var user = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
+            var genderList = new List<string> { Gender.MALE, Gender.FEMALE };
+
+            if(user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new EditProfileViewModel()
+            {
+                Email = user.Email,
+                Gender = user.Gender,
+                Phone = user.PhoneNumber,
+                UserName = user.UserName,
+                GenderTypes = genderList
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(EditProfileViewModel model)
+        {
+            var genderList = new List<string> { Gender.MALE, Gender.FEMALE };
+
+            var viewModel = new EditProfileViewModel(model)
+            {
+                GenderTypes = genderList
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var currentUserId = User.Identity.GetUserId();
+            var user = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if(! UserManager.CheckPassword(user, model.OldPassword))
+            {
+                ViewBag.PasswordMessage = "Password Is not Correct";
+
+                return View(viewModel);
+            }
+
+            if(UserManager.CheckPassword(user, model.NewPassword))
+            {
+                ViewBag.PasswordMessage = "You have used this password before";
+
+                return View(viewModel);
+            }
+
+            var hashedPassword = UserManager.PasswordHasher.HashPassword(model.NewPassword);
+
+            user.UserName = model.UserName;
+            user.PasswordHash = hashedPassword;
+            user.PhoneNumber = model.Phone;
+            user.Gender = model.Gender;
+            user.Email = model.Email;
+
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         //

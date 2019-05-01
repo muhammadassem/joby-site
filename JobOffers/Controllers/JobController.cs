@@ -164,7 +164,7 @@ namespace JobOffers.Controllers
                 return View(viewModel);
             }
 
-            model.JobId = (int)Session["jobId"];
+            model.JobId = (byte)Session["jobId"];
             model.ApplicatorId = User.Identity.GetUserId();
 
             var checkIfSameUserApplicateForSameJob = _context.ApplyForJob.Where(j => j.ApplicatorId == model.ApplicatorId && j.JobId == model.JobId).ToList();

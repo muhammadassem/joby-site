@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using JobOffers.ViewModels;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JobOffers.Controllers
 {
@@ -20,15 +23,13 @@ namespace JobOffers.Controllers
         }
         public ActionResult Index()
         {
-            var JobsList = _dbContext.JobCategories.Include(j => j.Jobs).ToList();
+            var JobsList = _dbContext.JobCategories.ToList();
 
             return View(JobsList);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
@@ -37,6 +38,72 @@ namespace JobOffers.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(ContactViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_dbContext));
+                var roles = roleManager.FindByName("Admins").Users.ToList();
+
+                var currentUserId = User.Identity.GetUserId();
+
+                var user = _dbContext.Users.SingleOrDefault(u => u.Id == currentUserId);
+
+                var mail = new MailMessage();
+
+                mail.From = new MailAddress(user.Email);
+                mail.Subject = model.Subject;
+                mail.IsBodyHtml = true;
+                mail.Body = model.Message;
+
+                foreach (var role in roles)
+                {
+                    var admin = _dbContext.Users.SingleOrDefault(u => u.Id == role.UserId);
+
+                    if (admin != null)
+                    {
+                        mail.To.Add(new MailAddress(admin.Email));
+                    }
+                    else
+                    {
+                        ViewBag.EmailMessage = "Sorry we can't contact with you now .. try again later";
+                        ViewBag.EmailMessageType = "danger";
+                        return View();
+                    }
+                }
+
+                var emailconfig = new NetworkCredential("apoasem1996@gmail.com", "Qwer@syam1996"); // email of company
+
+                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.Credentials = emailconfig;
+                smtpClient.Send(mail);
+
+                ViewBag.EmailMessage = "Message Sent Successfully";
+                ViewBag.EmailMessageType = "success";
+
+                return View();
+            }
+
+            ViewBag.EmailMessage = "Sorry you must login to send this message";
+            ViewBag.EmailMessageType = "danger";
+
+            return View();
+
+        }
+
+        private object RoleManager()
+        {
+            throw new NotImplementedException();
         }
 
         [Authorize]

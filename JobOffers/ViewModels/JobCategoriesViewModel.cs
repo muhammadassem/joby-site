@@ -9,7 +9,7 @@ namespace JobOffers.ViewModels
 {
     public class JobCategoriesViewModel
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Job Category Title")]
@@ -18,18 +18,6 @@ namespace JobOffers.ViewModels
         [Required]
         [Display(Name = "Job Category Description")]
         public string Description { get; set; }
-
-        public string PageTitle
-        { get
-            {
-                return (Id == 0) ? "Add New Job Category" : "Edit Job Category";
-            }
-        }
-
-        public JobCategoriesViewModel()
-        {
-            Id = 0;
-        }
 
         public JobCategoriesViewModel(JobCategory model)
         {

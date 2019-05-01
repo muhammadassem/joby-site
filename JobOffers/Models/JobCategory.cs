@@ -18,6 +18,6 @@ namespace JobOffers.Models
         [Required]
         public string Description { get; set; }
 
-        public ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<Job> Jobs { get; set; }
     }
 }

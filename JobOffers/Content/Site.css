@@ -18,8 +18,12 @@ body {
     color: #FFFFFF;
 }
 
-.main {
+.main-container {
     padding: 50px 0;
+}
+
+.main {
+    min-height: 550px;
 }
 
 .site-sreach {

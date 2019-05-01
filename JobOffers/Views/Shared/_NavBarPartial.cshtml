@@ -1,14 +1,15 @@
-﻿<nav class="navbar navbar-dark navbar-expand-md sticky-top navbar-default">
+﻿<nav class="navbar navbar-dark navbar-expand-md sticky-top navbar-default sticky-top">
     <div class="container">
         <a href="#" class="navbar-brand">
             <i class="fa fa-graduation-cap"></i> Joby
         </a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a href="~/" class="nav-link">
                         <i class="fa fa-home"></i>
@@ -23,13 +24,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="~/About" class="nav-link">
+                    <a href="~/Home/About" class="nav-link">
                         <i class="fa fa-info-circle"></i>
                         About
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="~/Home/Contact" class="nav-link">
                         <i class="fa fa-phone"></i>
                         Contact
                     </a>
@@ -42,6 +43,7 @@
                     }
                 </li>
             </ul>
+
             <div class="ml-auto">
                 @*@Html.Partial("_LoginNavBarPartial")*@
                 @Html.Partial("_LoginPartial")

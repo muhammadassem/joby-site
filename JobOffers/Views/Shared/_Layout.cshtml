@@ -9,10 +9,10 @@
 
 </head>
 <body id="content">
-    
+
     @Html.Partial("_NavBarPartial")
-    <div class="container main">
-        <div class="row flex-column">
+    <div class="container main-container">
+        <div class="flex-column main container-fluid">
             @RenderBody()
         </div>
     </div>
@@ -22,6 +22,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/javaScript")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
 </body>
 </html>
