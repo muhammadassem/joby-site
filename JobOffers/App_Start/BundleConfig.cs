@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace JobOffers
 {
@@ -11,8 +10,9 @@ namespace JobOffers
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-            //            "~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery.validate.unobtrusive.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -23,9 +23,17 @@ namespace JobOffers
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/font-awesome.css",
+                      "~/Content/datatables.min.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/javaScript").Include(
+                "~/Scripts/ckeditor/ckeditor.js",
+                "~/Content/datatables.min.js",
+                "~/Scripts/notify.min.js",
+                "~/Content/OwlCarousel/dist/owl.carousel.min.js"
+                ));
         }
     }
 }

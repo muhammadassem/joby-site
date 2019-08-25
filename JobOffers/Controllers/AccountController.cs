@@ -10,17 +10,21 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JobOffers.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace JobOffers.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -76,7 +80,7 @@ namespace JobOffers.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -140,9 +144,12 @@ namespace JobOffers.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            var userRoles = _context.Roles.ToList();
+
             var registrationViewModel = new RegisterViewModel
             {
-                GenderTypes = new List<string>() { Gender.MALE, Gender.FEMALE }
+                GenderTypes = new List<string>() { Gender.MALE, Gender.FEMALE },
+                Roles = userRoles
             };
 
             return View(registrationViewModel);
@@ -157,13 +164,14 @@ namespace JobOffers.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.Phone, Gender = model.Gender};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PhoneNumber = model.Phone, Gender = model.Gender };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    
+                    await UserManager.AddToRoleAsync(user.Id, model.UserRole);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -176,7 +184,99 @@ namespace JobOffers.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+
+            var userRoles = _context.Roles.ToList();
+
+            var registrationViewModel = new RegisterViewModel
+            {
+                Email = model.Email,
+                ConfirmPassword = model.ConfirmPassword,
+                UserName = model.ConfirmPassword,
+                Phone = model.Phone,
+                Password = model.Password,
+                Gender = model.Gender,
+                UserRole = model.UserRole,
+                GenderTypes = new List<string>() { Gender.MALE, Gender.FEMALE },
+                Roles = userRoles
+            };
+
+            return View(registrationViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            var currentUserId = User.Identity.GetUserId();
+
+            var user = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
+            var genderList = new List<string> { Gender.MALE, Gender.FEMALE };
+
+            if(user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new EditProfileViewModel()
+            {
+                Email = user.Email,
+                Gender = user.Gender,
+                Phone = user.PhoneNumber,
+                UserName = user.UserName,
+                GenderTypes = genderList
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(EditProfileViewModel model)
+        {
+            var genderList = new List<string> { Gender.MALE, Gender.FEMALE };
+
+            var viewModel = new EditProfileViewModel(model)
+            {
+                GenderTypes = genderList
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var currentUserId = User.Identity.GetUserId();
+            var user = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if(! UserManager.CheckPassword(user, model.OldPassword))
+            {
+                ViewBag.PasswordMessage = "Password Is not Correct";
+
+                return View(viewModel);
+            }
+
+            if(UserManager.CheckPassword(user, model.NewPassword))
+            {
+                ViewBag.PasswordMessage = "You have used this password before";
+
+                return View(viewModel);
+            }
+
+            var hashedPassword = UserManager.PasswordHasher.HashPassword(model.NewPassword);
+
+            user.UserName = model.UserName;
+            user.PasswordHash = hashedPassword;
+            user.PhoneNumber = model.Phone;
+            user.Gender = model.Gender;
+            user.Email = model.Email;
+
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         //

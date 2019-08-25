@@ -1,0 +1,18 @@
+﻿@model JobOffers.ViewModels.ApplyForJobViewModel
+@{
+    ViewBag.Title = "DetailsOfAppliedJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DetailsOfAppliedJob</h2>
+
+<dl>
+    <dt>@Html.DisplayNameFor(m => m.Message)</dt>
+    <dd>@Html.DisplayFor(m => m.Message)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.DateAdded)</dt>
+    <dd>@Html.DisplayFor(m => m.DateAdded)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.Job.JobTitle)</dt>
+    <dd>@Html.DisplayFor(m => m.Job.JobTitle)</dd>
+</dl>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace JobOffers.Controllers
 {
+    [Authorize(Roles = "Admins")]
     public class JobCategoryController : Controller
     {
         private ApplicationDbContext _context;
@@ -20,7 +21,12 @@ namespace JobOffers.Controllers
         // GET: JobCategory
         public ActionResult Index()
         {
-            IEnumerable<JobCategories> jobsView = _context.JobCategories.ToList();
+            return View();
+        }
+
+        public ActionResult ViewAll()
+        {
+            IEnumerable<JobCategory> jobsView = _context.JobCategories.ToList();
 
             return View(jobsView);
         }
@@ -35,19 +41,31 @@ namespace JobOffers.Controllers
                 return HttpNotFound();
             }
 
-            var viewModel = new JobCategoriesViewModel
-            {
-                Name = category.Name,
-                Description = category.Description
-            };
+            var viewModel = new JobCategoriesViewModel(category);
 
             return View(viewModel);
         }
 
-        public ActionResult New()
+        public ActionResult Create()
         {
-            var viewModel = new JobCategoriesViewModel();
-            return View("JobCategoriesForm", viewModel);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(JobCategory model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new JobCategoriesViewModel(model);
+
+                return View(viewModel);
+            }
+           
+            _context.JobCategories.Add(model);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewAll");
         }
 
         public ActionResult Edit(int id)
@@ -61,43 +79,34 @@ namespace JobOffers.Controllers
 
             var viewModel = new JobCategoriesViewModel(categoryInDb); // mapping inside view model
 
-            return View("JobCategoriesForm", viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Save(JobCategories model)
+        public ActionResult Edit(JobCategory model)
         {
             if(!ModelState.IsValid)
             {
-                var viewModel = new JobCategoriesViewModel
-                {
-                    Name = model.Name,
-                    Description = model.Name
-                };
+                var viewModel = new JobCategoriesViewModel(model);
 
-                return View("JobCategoriesForm");
+                return View();
             }
 
-            if(model.Id == 0)
-            {
-                // create
-                _context.JobCategories.Add(model);
-            } else
-            {
-                var categoryInDb = _context.JobCategories.SingleOrDefault(m => m.Id == model.Id);
+           
+            var categoryInDb = _context.JobCategories.SingleOrDefault(m => m.Id == model.Id);
 
-                if (categoryInDb == null)
-                {
-                    return HttpNotFound();
-                }
-
-                categoryInDb.Name = model.Name;
-                categoryInDb.Description = model.Description;
+            if (categoryInDb == null)
+            {
+                return HttpNotFound();
             }
+
+            categoryInDb.Name = model.Name;
+            categoryInDb.Description = model.Description;
+
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "JobCategory");
+            return RedirectToAction("ViewAll");
         }
 
         [HttpPost]
@@ -112,7 +121,7 @@ namespace JobOffers.Controllers
             _context.JobCategories.Remove(categoryInDb);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "JobCategory");
+            return RedirectToAction("ViewAll", "JobCategory");
         }
     }
 }

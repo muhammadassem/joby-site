@@ -6,22 +6,67 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 
+    <link rel="stylesheet" href="~/Content/OwlCarousel/dist/assets/owl.carousel.min.css" />
 </head>
-<body class="">
-    
+<body id="content">
+    <div id="spinner-loader" class="invisible">
+        <img src="~/Images/Spinner.gif" alt="" />
+    </div>
+
     @Html.Partial("_NavBarPartial")
-    <div class="container main">
-        <div class="row flex-column">
+    <div class="container main-container">
+        <div class="flex-column main container-fluid">
+            <div id="notification"></div>
             @RenderBody()
         </div>
     </div>
 
-    @*@Html.Partial("_FooterPartial")*@
+    @Html.Partial("_FooterPartial")
 
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/javaScript")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/main.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+        function activateJobCategoriesTable() {
+            $("#categoriesTable").DataTable();
+        }
+
+        function activateJobsTable() {
+            $("#jobsTable").DataTable();
+        }
+
+        $(document).ready(function () {
+            activateJobCategoriesTable();
+            activateJobsTable();
+
+            var owl = $('.owl-carousel');
+
+            owl.owlCarousel({
+                items: 4,
+                loop: true,
+                margin: 10,
+                autoplay: true,
+                autoplayTimeout: 1000,
+                autoplayHoverPause: true
+            });
+            $('.play').on('click', function () {
+                owl.trigger('play.owl.autoplay', [1000])
+            })
+            $('.stop').on('click', function () {
+                owl.trigger('stop.owl.autoplay')
+            })
+
+        })
+    </script>
+
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JobOffers.Models
@@ -49,9 +50,12 @@ namespace JobOffers.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+
+        //[Required]
+        //[EmailAddress]
+        //public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -68,6 +72,11 @@ namespace JobOffers.Models
         public string Gender { get; set; }
 
         public IEnumerable<string> GenderTypes { get; set; }
+
+        [Required]
+        public string UserRole { get; set; }
+
+        public IEnumerable<IdentityRole> Roles { get; set; }
 
         [Required]
         [Display(Name="username")]
@@ -90,6 +99,62 @@ namespace JobOffers.Models
         public string ConfirmPassword { get; set; }
         [Required]
         public string Phone { get; set; }
+    }
+
+    public class EditProfileViewModel
+    {
+        [Required]
+        public string Gender { get; set; }
+
+        public IEnumerable<string> GenderTypes { get; set; }
+
+        [Required]
+        [Display(Name = "username")]
+        public string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Password Not Found", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Old Password")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm New password")]
+        [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmNewPassword { get; set; }
+        [Required]
+        public string Phone { get; set; }
+
+        public EditProfileViewModel()
+        {
+
+        }
+        public EditProfileViewModel(EditProfileViewModel model)
+        {
+            UserName = model.UserName;
+            Gender = model.Gender;
+            Email = model.Email;
+            Phone = model.Phone;
+        }
+
+        //public EditProfileViewModel(ApplicationUser user)
+        //{
+        //    UserName = user.UserName;
+        //    Gender = user.Gender;
+        //    Email = user.Email;
+        //    Phone = user.PhoneNumber;
+        //}
     }
 
     public class ResetPasswordViewModel

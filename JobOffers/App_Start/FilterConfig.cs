@@ -10,6 +10,7 @@ namespace JobOffers
             GlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new RequireHttpsAttribute());
         }
     }
 }

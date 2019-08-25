@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Add New Role", "New", "Roles", null, new { @class= "btn btn-primary" })
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Id)</th>
+            <th>@Html.DisplayNameFor(m => m.Name)</th>
+            <th>Controls</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                    <a href="~/Roles/Edit/@item.Id" class="icons fa fa-edit fa-lg text-primary"></a>
+                    <a href="" class="icons fa fa-trash text-danger fa-lg delete-role" data-role-id="@item.Id"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $(".delete-role").on("click", function () {
+                var row = $(this).closest("tr");
+                if (confirm("Are You Sure to Delete?")) {
+                    $.ajax({
+                        url: "/Roles/Delete/" + $(this).attr("data-role-id"),
+                        type: "POST",
+                        success: function () {
+                                row.remove();
+                        },
+                        error: function () {
+                            console.log("error");
+                        }
+                    })
+                }
+
+                return false;
+            })
+        })
+    </script>
+}

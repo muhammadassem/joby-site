@@ -1,0 +1,68 @@
+﻿@model IEnumerable<JobOffers.Models.ApplyForJob>
+
+@{
+    ViewBag.Title = "JobsAppliedByUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>JobsAppliedByUser</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Job.JobTitle)</th>
+            <th>@Html.DisplayNameFor(m => m.ApplicationDate)</th>
+            <th>@Html.DisplayNameFor(m => m.Job.JobDescription)</th>
+            <th>@Html.DisplayNameFor(m => m.Message)</th>
+            <th>Controls</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Job.JobTitle</td>
+                <td>@item.ApplicationDate</td>
+                <td>@item.Job.JobDescription</td>
+                <td>@item.Message</td>
+
+                <td>
+                    <a href="~/Home/EditAppliedJob/@item.Id" class="fa fa-edit text-primary fa-lg"></a>
+                    <a href="~/Home/DetailsOfAppliedJob/@item.Id" class="fa fa-info-circle text-info fa-lg"></a>
+                    <a href="" class="fa fa-trash text-danger delete-job fa-lg" data-job-id="@item.Id"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+
+            $(".delete-job").on("click", function () {
+
+                var row = $(this).closest("tr");
+                var id = $(this).attr("data-job-id");
+
+                console.log("delete")
+                if (confirm("Are you sure to delete")) {
+                    $.ajax({
+                        url: "/Home/DeleteAppliedJob/" + id,
+                        method: "POST",
+                        success: function () {
+                            row.remove();
+                            console.log("Success");
+                        },
+                        error: function () {
+                            console.log("fail");
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+}

@@ -1,17 +1,43 @@
-﻿@{
+﻿@model JobOffers.ViewModels.ContactViewModel
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+    <div class="alert alert-@ViewBag.EmailMessageType alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @ViewBag.EmailMessage
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Subject)
+        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Subject, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Message)
+        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @id = "ckedit" })
+        @Html.ValidationMessageFor(m => m.Message, null, new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+}
+
+@section Scripts
+{
+    <script>
+        CKEDITOR.replace("ckedit");
+    </script>
+}

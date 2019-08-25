@@ -1,0 +1,27 @@
+﻿@model JobOffers.ViewModels.JobCategoriesViewModel
+@{
+    ViewBag.Title = "Edit Job Category";
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Edit", "JobCategory", FormMethod.Post, new { onsubmit= "return postCategory(this)", data_resetUrl= Url.Action("Create", "JobCategory") }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "Please Fix These Errors")
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+}

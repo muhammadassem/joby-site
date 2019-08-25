@@ -2,7 +2,6 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    //padding-top: 100px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -12,15 +11,51 @@ body {
 }
 
 .navbar-default {
-    background-color: #01376e;
+    background-color: #003E6A;
 }
 
 .navbar-dark .navbar-nav .nav-link {
     color: #FFFFFF;
 }
 
+.main-container {
+    padding: 50px 0;
+}
+
 .main {
-    padding-top: 50px;
+    min-height: 550px;
+    position: relative;
+}
+
+.main-nav {
+    padding: 20px;
+}
+
+#notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.site-sreach-input {
+    width: 180px;
+    padding-left: 40px;
+    background-image: url('../Images/icons8-search-50.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+    transition: width .5s ease-in-out;
+    margin-left: 50px;
+}
+
+.site-sreach-input:focus {
+    width: 100%;
+}
+
+
+.nav-link > i {
+    font-size: 25px;
+    color: #FFA31C;
 }
 
 .footer {
@@ -53,4 +88,25 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.controls {
+    font-size: 25px;
+}
+
+
+li a.nav-link.active {
+    border-top: 2px solid #0573e3;
+}
+
+
+#spinner-loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: rgba(103, 103, 103, 0.57);
 }

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<JobOffers.ViewModels.AppliedJobsPostedByPublisherViewModel>
+@{
+    ViewBag.Title = "AplliedJobsPostedByPublisher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-success">AppliedJobsPostedByPublisher</h2>
+
+
+@foreach (var item in Model)
+{
+    <h2 class="text-center">@item.JobTitle</h2>
+
+    foreach (var job in item.AppliedJobs)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Applied username</th>
+                    <th>Application Date</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@job.User.UserName</td>
+                    <td>@job.ApplicationDate</td>
+                    <td>@job.Message</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
