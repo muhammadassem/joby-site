@@ -41,6 +41,7 @@ namespace JobOffers.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Contact(ContactViewModel model)
         {
             if (!ModelState.IsValid)
@@ -101,11 +102,6 @@ namespace JobOffers.Controllers
 
         }
 
-        private object RoleManager()
-        {
-            throw new NotImplementedException();
-        }
-
         [Authorize]
         public ActionResult JobsAppliedByUser()
         {
@@ -129,6 +125,7 @@ namespace JobOffers.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public ActionResult EditAppliedJob(int id)
         {
             var jobInDb = _dbContext.ApplyForJob.Include(m => m.Job).SingleOrDefault(j => j.Id == id);
@@ -195,6 +192,7 @@ namespace JobOffers.Controllers
             return RedirectToAction("JobsAppliedByUser");
         }
 
+        [Authorize(Roles="Publishers")]
         public ActionResult AppliedJobsPostedByPublisher()
         {
             var currentUserId = User.Identity.GetUserId();

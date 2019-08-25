@@ -1,0 +1,44 @@
+﻿@model IEnumerable<JobOffers.Models.JobCategory>
+
+@{
+    ViewBag.Title = "Job Categories";
+    Layout = null; // because I use nav-tabs
+}
+
+<table class="table table-hover table-bordered table-light" id="categoriesTable">
+    <thead>
+        <tr>
+            <th>Job Type</th>
+            <th>Controls</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a class="controls mr-2 text-primary" 
+                       onclick="redirectToEditCategoryAction('@Url.Action("Edit", "JobCategory", new { id = item.Id })', '#categoryTab')">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    @Html.ActionLink(" ", "Details", "JobCategory", new { id = item.Id }, new { @class = "controls fa fa-info-circle mr-2 text-info" })
+
+                    <a data-category-id="@item.Id" class="controls delete-category text-danger" onclick="deleteCategory(this)"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+
+    
+    </script>
+}

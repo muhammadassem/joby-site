@@ -1,16 +1,16 @@
 ﻿using JobOffers.Models;
+using JobOffers.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using JobOffers.ViewModels;
-using System.IO;
-using Microsoft.AspNet.Identity;
 
 namespace JobOffers.Controllers
 {
+    [Authorize]
     public class JobController : Controller
     {
         private ApplicationDbContext _context;
@@ -20,8 +20,12 @@ namespace JobOffers.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Job
-        [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string filter)
+        {
+            return View();
+        }
+
+        public ActionResult ViewAll()
         {
             var jobs = _context.Jobs.Include(j => j.JobCategory).Include(j => j.User).ToList();
             return View(jobs);
@@ -81,9 +85,11 @@ namespace JobOffers.Controllers
                     var oldImagePath = model.ImageUrl;
                     System.IO.File.Delete(Path.Combine(Server.MapPath("~/Uploads"), oldImagePath));
                 }
-                string path = Path.Combine(Server.MapPath("~/Uploads"), upload.FileName);
+                var fileName = Path.GetFileNameWithoutExtension(upload.FileName) + DateTime.Now.ToLongDateString() + Path.GetExtension(upload.FileName);
+
+                string path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
                 upload.SaveAs(path);
-                model.ImageUrl = upload.FileName;
+                model.ImageUrl = fileName;
             }
 
             if (model.Id == 0)
@@ -100,7 +106,6 @@ namespace JobOffers.Controllers
                     return HttpNotFound();
                 }
 
-
                 jobInDb.JobTitle = model.JobTitle;
                 jobInDb.JobDescription = model.JobDescription;
                 jobInDb.ImageUrl = model.ImageUrl;
@@ -110,10 +115,10 @@ namespace JobOffers.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Job");
+            return RedirectToAction("ViewAll", "Job");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public ActionResult Delete(int? id)
         {
             var job = _context.Jobs.SingleOrDefault(j => j.Id == id);
@@ -126,7 +131,7 @@ namespace JobOffers.Controllers
             _context.Jobs.Remove(job);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Job");
+            return RedirectToAction("ViewAll", "Job");
         }
 
         public ActionResult Details(int id)
@@ -164,7 +169,7 @@ namespace JobOffers.Controllers
                 return View(viewModel);
             }
 
-            model.JobId = (byte)Session["jobId"];
+            model.JobId = (int)Session["jobId"];
             model.ApplicatorId = User.Identity.GetUserId();
 
             var checkIfSameUserApplicateForSameJob = _context.ApplyForJob.Where(j => j.ApplicatorId == model.ApplicatorId && j.JobId == model.JobId).ToList();

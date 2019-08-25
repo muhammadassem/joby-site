@@ -1,26 +1,24 @@
 ﻿@model JobOffers.ViewModels.JobCategoriesViewModel
 @{ 
     ViewBag.Title = "Create Job Category";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null; // because I use nav-tabs
 }
 
-<h2>Create New Category</h2>
-
-@using (Html.BeginForm("Create", "JobCategory"))
+@using (Html.BeginForm("Create", "JobCategory", FormMethod.Post ,new { onsubmit= "return postCategory(this)", data_resetUrl = Url.Action("Create", "JobCategory") }))
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "Please Fix These Errors")
+    @Html.ValidationSummary(true, "Please Fix These Errors", new { @class = "text-danger" })
 
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class="form-control"})
-        @Html.ValidationMessageFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class="form-control" })
+        @Html.ValidationMessageFor(m => m.Name, null, new { @class="text-danger"})
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Description)
-        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class="form-control" })
+        @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
     </div>
     
     <button type="submit" class="btn btn-outline-primary">Submit</button>

@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JobOffers</RootNamespace>
     <AssemblyName>JobOffers</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,12 +75,21 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Mvc.JQuery.DataTables, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mvc.JQuery.DataTables.1.5.44\lib\net451\Mvc.JQuery.DataTables.dll</HintPath>
+    </Reference>
+    <Reference Include="Mvc.JQuery.DataTables.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mvc.JQuery.DataTables.Common.1.5.15\lib\net451\Mvc.JQuery.DataTables.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.0.6.10\lib\net461\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -260,21 +270,175 @@
     <Compile Include="ViewModels\RolesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-JobOffers.mdf" />
+    <Content Include="App_Data\aspnet-JobOffers_log.ldf">
+      <DependentUpon>aspnet-JobOffers.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatables.css" />
+    <Content Include="Content\datatables.js" />
+    <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\datatables.min.js" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.min.js" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\notify.css" />
+    <Content Include="Content\notify.min.css" />
+    <Content Include="Content\OwlCarousel\.gitattributes" />
+    <Content Include="Content\OwlCarousel\.gitignore" />
+    <Content Include="Content\OwlCarousel\dist\assets\ajax-loader.gif" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.carousel.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.carousel.min.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.theme.default.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.theme.default.min.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.theme.green.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.theme.green.min.css" />
+    <Content Include="Content\OwlCarousel\dist\assets\owl.video.play.png" />
+    <Content Include="Content\OwlCarousel\dist\owl.carousel.js" />
+    <Content Include="Content\OwlCarousel\dist\owl.carousel.min.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\css\animate.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\css\docs.theme.min.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\bird_blue_32.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\download.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-drag.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-modern.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-module.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-options.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-responsive.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\feature-zombie.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\owl-logo.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\img\twitter_25.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\js\app.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\js\foundation.min.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\ajax-loader.gif" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.carousel.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.carousel.min.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.theme.default.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.theme.default.min.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.theme.green.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.theme.green.min.css" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\assets\owl.video.play.png" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\owl.carousel.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\owl.carousel.min.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\vendors\foundation.min.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\vendors\highlight.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\vendors\jquery.min.js" />
+    <Content Include="Content\OwlCarousel\docs\assets\vendors\jquery.mousewheel.min.js" />
+    <Content Include="Content\OwlCarousel\docs\demos\animate.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\autoheight.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\autoplay.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\autowidth.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\basic.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\center.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\demos.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\events.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\lazyLoad.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\merge.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\mousewheel.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\responsive.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\rtl.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\stagepadding.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\test.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\urlhashnav.html" />
+    <Content Include="Content\OwlCarousel\docs\demos\video.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\api-classes.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\api-events.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\api-options.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\dev-buildin-plugins.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\dev-external.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\dev-plugin-api.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\dev-styles.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\started-faq.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\started-installation.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\started-welcome.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\support-changelog.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\support-contact.html" />
+    <Content Include="Content\OwlCarousel\docs\docs\support-contributing.html" />
+    <Content Include="Content\OwlCarousel\docs\index.html" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\css\animate.css" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\bird_blue_32.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\download.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-drag.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-modern.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-module.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-options.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-responsive.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\feature-zombie.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\owl-logo.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\img\twitter_25.png" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\js\app.js" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\js\foundation.min.js" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\vendors\foundation.min.js" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\vendors\highlight.js" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\vendors\jquery.min.js" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\vendors\jquery.mousewheel.min.js" />
+    <Content Include="Content\OwlCarousel\docs_src\helpers\modulo.js" />
+    <Content Include="Content\OwlCarousel\docs_src\helpers\test.js" />
+    <Content Include="Content\OwlCarousel\Gruntfile.js" />
+    <Content Include="Content\OwlCarousel\src\img\ajax-loader.gif" />
+    <Content Include="Content\OwlCarousel\src\img\owl.video.play.png" />
+    <Content Include="Content\OwlCarousel\src\js\owl.animate.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.autoheight.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.autoplay.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.autorefresh.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.carousel.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.hash.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.lazyload.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.navigation.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.support.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.support.modernizr.js" />
+    <Content Include="Content\OwlCarousel\src\js\owl.video.js" />
+    <Content Include="Content\OwlCarousel\test\index.html" />
+    <Content Include="Content\OwlCarousel\test\unit\autoplay.js" />
+    <Content Include="Content\OwlCarousel\test\unit\core.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\black-and-white-image-of-colleagues-standing-in-office-and-looking-at-city-view-through-window.jpg" />
+    <Content Include="Images\businessmen-on-street-bw.jpg" />
     <Content Include="Images\icons8-google-web-search-64.png" />
     <Content Include="Images\icons8-google-web-search.svg" />
     <Content Include="Images\icons8-search-50.png" />
+    <Content Include="Images\image-placeholder.png" />
+    <Content Include="Images\man-sitting-on-sofa-and-using-computer.jpg" />
+    <Content Include="Images\officer-professional-wireless.jpg" />
+    <Content Include="Images\Spinner.gif" />
+    <Content Include="Images\wooden-shelf-with-laptop-and-notebook.jpg" />
+    <Content Include="Images\young-man-sitting-at-desk-using-laptop-and-writing-in-notebook.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -284,6 +448,90 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\OwlCarousel\.travis.yml" />
+    <Content Include="Content\OwlCarousel\bower.json" />
+    <Content Include="Content\OwlCarousel\CONTRIBUTING.md" />
+    <Content Include="Content\OwlCarousel\dist\LICENSE" />
+    <Content Include="Content\OwlCarousel\dist\README.md" />
+    <Content Include="Content\OwlCarousel\docs\assets\owlcarousel\README.md" />
+    <Content Include="Content\OwlCarousel\docs\assets\vendors\jquery.min.map" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\custom.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\demos.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\docs.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\docs.theme.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\highlight.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\scss\_settings.scss" />
+    <Content Include="Content\OwlCarousel\docs_src\assets\vendors\jquery.min.map" />
+    <Content Include="Content\OwlCarousel\docs_src\data\classes.json" />
+    <Content Include="Content\OwlCarousel\docs_src\data\events.json" />
+    <Content Include="Content\OwlCarousel\docs_src\data\features.json" />
+    <Content Include="Content\OwlCarousel\docs_src\data\options.json" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\layouts\demos.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\layouts\docs.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\layouts\home.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\animate.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\autoheight.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\autoplay.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\autowidth.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\basic.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\center.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\demos.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\events.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\lazyLoad.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\merge.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\mousewheel.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\responsive.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\rtl.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\stagepadding.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\test.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\urlhashnav.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\demos\video.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\api-classes.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\api-events.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\api-options.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\dev-buildin-plugins.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\dev-external.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\dev-plugin-api.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\dev-styles.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\started-faq.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\started-installation.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\started-welcome.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\support-changelog.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\support-contact.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\docs\support-contributing.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\pages\index.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\footer.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\head.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\header.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\home-carousel.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\home-features.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\home-hero.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\home-teaser-text.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\javascripts.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\releated-docs.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\sidenav-docs.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\title.hbs" />
+    <Content Include="Content\OwlCarousel\docs_src\templates\partials\vendors.hbs" />
+    <Content Include="Content\OwlCarousel\ISSUE_TEMPLATE.md" />
+    <Content Include="Content\OwlCarousel\LICENSE" />
+    <Content Include="Content\OwlCarousel\package-lock.json" />
+    <Content Include="Content\OwlCarousel\package.json" />
+    <Content Include="Content\OwlCarousel\README.md" />
+    <Content Include="Content\OwlCarousel\ROADMAP.md" />
+    <Content Include="Content\OwlCarousel\src\js\.jscsrc" />
+    <Content Include="Content\OwlCarousel\src\js\.jshintrc" />
+    <Content Include="Content\OwlCarousel\src\scss\owl.carousel.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\owl.theme.default.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\owl.theme.green.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_animate.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_autoheight.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_core.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_lazyload.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_theme.default.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_theme.green.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_theme.scss" />
+    <Content Include="Content\OwlCarousel\src\scss\_video.scss" />
+    <Content Include="Content\OwlCarousel\_config.json" />
     <None Include="Properties\PublishProfiles\JobyProfile.pubxml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -632,10 +880,14 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-notify.js" />
+    <Content Include="Scripts\jquery-notify.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -707,9 +959,10 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\JobCategory\Edit.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\JobCategory\ViewAll.cshtml" />
+    <Content Include="Views\Job\viewAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
@@ -805,7 +1058,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1695</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44323/</IISUrl>
+          <IISUrl>https://localhost:58044/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

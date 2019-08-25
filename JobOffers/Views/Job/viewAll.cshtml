@@ -1,0 +1,37 @@
+﻿@model IEnumerable<JobOffers.Models.Job>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<div class="table-responsive">
+    <table class="table" id="jobsTable">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.JobTitle)</th>
+                <th>@Html.DisplayNameFor(m => m.JobDescription)</th>
+                <th>@Html.DisplayNameFor(m => m.JobCategory.Name)</th>
+                <th>@Html.DisplayNameFor(m => m.User.UserName)</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.JobTitle</td>
+                    <td>@item.JobDescription</td>
+                    <td>@item.JobCategory.Name</td>
+                    <td>@item.User.UserName</td>
+
+                    <td>
+                        <a class="fa fa-edit fa-lg text-primary" onclick="redirectToEditJobAction('@Url.Action("Edit", "Job", new { id = item.Id })', '#JobTab')"></a>
+                        <a href="~/Job/Details/@item.Id" class="fa fa-info-circle fa-lg text-info"></a>
+                        <a class="fa fa-trash text-danger fa-lg delete-job" data-job-id="@item.Id" onclick="deleteJob(this)"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

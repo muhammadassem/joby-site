@@ -1,6 +1,6 @@
-﻿<nav class="navbar navbar-dark navbar-expand-md sticky-top navbar-default sticky-top">
+﻿<nav class="navbar navbar-dark navbar-expand-md sticky-top navbar-default sticky-top main-nav">
     <div class="container">
-        <a href="#" class="navbar-brand">
+        <a href="#" class="nav-link navbar-brand">
             <i class="fa fa-graduation-cap"></i> Joby
         </a>
 
@@ -9,18 +9,11 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarToggler">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 main-nav-ul">
                 <li class="nav-item">
                     <a href="~/" class="nav-link">
                         <i class="fa fa-home"></i>
                         Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="~/JobCategory" class="nav-link">
-                        <i class="fa fa-glass"></i>
-                        Categories
                     </a>
                 </li>
                 <li class="nav-item">
@@ -36,10 +29,10 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item search-site">
                     @using (Html.BeginForm("Search", "Home", null, FormMethod.Post))
                     {
-                        <input type="text" class="form-control site-sreach" name="search" placeholder="Search" />
+                        <input type="text" class="form-control site-sreach-input" name="search" placeholder="Search" />
                     }
                 </li>
             </ul>

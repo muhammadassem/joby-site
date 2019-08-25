@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace JobOffers.Controllers
 {
+    [Authorize(Roles="Admins")]
     public class RolesController : Controller
     {
         private ApplicationDbContext _dbContext;

@@ -1,74 +1,22 @@
-﻿@model IEnumerable<JobOffers.Models.JobCategory>
-
-@{ 
+﻿@{
     ViewBag.Title = "Job Categories";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Job Categories</h2>
 
-@Html.ActionLink("Add New Job Category", "Create", "JobCategory", null, new { @class = "btn btn-primary"})
-
-<table class="table table-borderless table-hover">
-    <thead>
-        <tr>
-            <th>Job Type</th>
-            <th>Edit</th>
-            <th>Details</th>
-            <th>Delete</th>
-
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @Html.ActionLink(" ", "Edit", "JobCategory", new { id = item.Id }, new { @class = "fa fa-edit" })
-                </td>
-                <td>
-                    @Html.ActionLink(" ", "Details", "JobCategory", new { id = item.Id }, new { @class = "fa fa-info-circle" })
-                </td>
-                <td>
-                    <a href="" data-category-id="@item.Id" class="fa fa-trash delete-cateogry"></a>
-                </td>
-            </tr>
-        }
-        </tbody>
-</table>
-
-@section Scripts {
-    <script>
-    $(document).ready(function () {
-
-        $(".delete-cateogry").click(function (e) {
-            e.preventDefault();
-
-            if (confirm("Are You Sure?"))
-            {
-                var id = $(this).attr("data-category-id");
-                var row = $(this).closest("tr");
-                console.log(id);
-                console.log(row);
-
-
-                $.ajax({
-                    type: "DELETE",
-                    url: '/JobCategory/Delete/' + id,
-                    success: function () {
-                        console.log("success");
-                        row.remove();
-                    },
-                    error: function () {
-                        console.log("error");
-                    }
-                });
-            }
-        });
-    });
-    </script>
-}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" id="all-categories-tab" data-toggle="tab" href="#viewCategoriesTab">All Categories</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="category-config-tab" data-toggle="tab" href="#categoryTab">New Category</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="viewCategoriesTab">
+        @Html.Action("ViewAll")
+    </div>
+    <div class="tab-pane fade" id="categoryTab">
+        @Html.Action("Create")
+    </div>
+</div>

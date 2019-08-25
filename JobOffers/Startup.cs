@@ -27,9 +27,10 @@ namespace JobOffers
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
 
-            if(! roleManager.RoleExists("Admins"))
+            if (!roleManager.RoleExists("Admins"))
             {
-                var role = new IdentityRole {
+                var role = new IdentityRole
+                {
                     Name = "Admins"
                 };
                 roleManager.Create(role);
@@ -41,9 +42,9 @@ namespace JobOffers
                     Email = "mohamedasemsyam@outlook.com"
                 };
 
-                var userCreated = userManager.Create(user, "A666665");
+                var userCreated = userManager.Create(user, "Qwer@admin0000");
 
-                if(userCreated.Succeeded)
+                if (userCreated.Succeeded)
                 {
                     userManager.AddToRole(user.Id, role.Name);
                 }

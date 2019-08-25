@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace JobOffers.Controllers
 {
+    [Authorize(Roles = "Admins")]
     public class JobCategoryController : Controller
     {
         private ApplicationDbContext _context;
@@ -19,6 +20,11 @@ namespace JobOffers.Controllers
         }
         // GET: JobCategory
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult ViewAll()
         {
             IEnumerable<JobCategory> jobsView = _context.JobCategories.ToList();
 
@@ -59,7 +65,7 @@ namespace JobOffers.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "JobCategory");
+            return RedirectToAction("ViewAll");
         }
 
         public ActionResult Edit(int id)
@@ -100,10 +106,10 @@ namespace JobOffers.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "JobCategory");
+            return RedirectToAction("ViewAll");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public ActionResult Delete(int id)
         {
             var categoryInDb = _context.JobCategories.SingleOrDefault(m => m.Id == id);
@@ -115,7 +121,7 @@ namespace JobOffers.Controllers
             _context.JobCategories.Remove(categoryInDb);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "JobCategory");
+            return RedirectToAction("ViewAll", "JobCategory");
         }
     }
 }

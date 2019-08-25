@@ -7,17 +7,49 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class="nav-link" })
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="~/Manage/Index" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @User.Identity.GetUserName()
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                @if (User.IsInRole("Admins"))
+                {
+                    <a class="dropdown-item" href="~/Roles">Manage Roles</a>
+                    <a class="dropdown-item" href="~/JobCategory">Manage Categories</a>
+                    <a class="dropdown-item" href="~/Job">Manage Jobs</a>
+                }
+                else if (User.IsInRole("Publishers"))
+                {
+                    <a class="dropdown-item" href="~/Job">Manage Jobs</a>
+                    <a class="dropdown-item" href="~/Home/AppliedJobsPostedByPublisher">Jobs Applications</a>
+                    @*<a class="dropdown-item" href="~/Job/@User.Identity.GetUserId()">My Jobs</a>*@
+                }
+                else
+                {
+                    <a class="dropdown-item" href="~/Home/JobsAppliedByUser">My Applications</a>
+                }
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </div>
         </li>
-        <li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
 }
 else
 {
-<ul class="nav navbar-nav navbar-right">
-    <li class="nav-item d-flex"> @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
-    <li class="nav-item">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+<ul class="nav navbar-nav navbar-right d-flex">
+    <li class="nav-item">
+        <a href="~/Account/Register" id="registerLink" class="nav-link">
+            <i class="fa fa-user-plus"></i>
+            Register
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="~/Account/Login" id="loginLink" class="nav-link">
+            <i class="fa fa-sign-in"></i>
+            Login
+        </a>
+    </li>
 </ul>
 }
